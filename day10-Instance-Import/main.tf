@@ -1,8 +1,19 @@
 resource "aws_instance" "name" {
-    ami           = var.ami_id
-    instance_type = var.instance_type
-    subnet_id     = var.subnet_id
-    tags          = var.tags
-}
+  ami           = "ami-00e801948462f718a"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "ec2-instance"
+  }
 
-#terraform import aws_instance.name i-0123456789abcdef0
+}
+#importing the existing s3 bucket to terraform state file
+resource "aws_s3_bucket" "name" {
+  bucket = "tf-bucket-import-unique-name-12345"
+}
+resource "aws_s3_bucket_versioning" "name" {
+  bucket = aws_s3_bucket.name.id
+  versioning_configuration {
+    status = "Suspended"
+  }
+
+}
