@@ -97,7 +97,7 @@ variable "deletion_protection" {
 variable "skip_final_snapshot" {
   description = "Set true only for non-production teardown."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "redis_node_type" {
