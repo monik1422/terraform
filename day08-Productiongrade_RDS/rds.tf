@@ -85,9 +85,10 @@ resource "aws_db_instance" "primary" {
   publicly_accessible    = false
   multi_az               = true
 
-  manage_master_user_password = false
-  password                    = random_password.db.result
-  parameter_group_name        = aws_db_parameter_group.mysql.name
+  # Self-managed password — do NOT also set manage_master_user_password (even to
+  # false); the provider treats the two as mutually exclusive and errors.
+  password             = random_password.db.result
+  parameter_group_name = aws_db_parameter_group.mysql.name
 
   backup_retention_period   = var.db_backup_retention_days
   backup_window             = "03:00-04:00"
